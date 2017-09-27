@@ -3,7 +3,7 @@ const CryptoJS = require('crypto-js');
 const HEADER_FORMAT = /^Basic\s(\w+={0,2})$/;  // OUR HEADER FORMAT
 const CREDENTIALS_FORMAT = /^(.*):(.*)$/; // our limited credentials parsing
 
-function BasicAuthCredentials(req, res, next) {
+exports.BasicAuthCredentials = (req, res, next) => {
   const authHeader = req.get('Authorization'); // Get the Header value
   const matches =  HEADER_FORMAT.exec(authHeader);
 

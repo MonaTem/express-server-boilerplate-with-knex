@@ -7,7 +7,7 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.set('view engine', 'ejs')
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 app.use(cors()) //check security!!
 
 app.all('/', (req,res) => {
@@ -20,6 +20,13 @@ app.use('/api/posts',rPosts)
 
 const rSession = require('./routes/session')
 app.use('/api/session', rSession)
+
+const basicAuth = require('./middleware/basicAuth')
+app.get('/protected', basicAuth.BasicAuthCredentials,
+(req, res) => {
+  console.log(req.credentials);
+  res.send('PROTECTED DATA')
+})
 
 app.listen(PORT, () => {
 console.log(`💥  ${new Date().toLocaleString()}`)
